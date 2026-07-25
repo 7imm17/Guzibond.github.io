@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0d0b16">
+  <meta name="description" content="谷绊 GUZI BOND——为每一件谷子保存故事、陪伴与流转记忆。">
+  <title>谷绊 GUZI BOND｜谷主羁绊档案系统</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="aurora aurora-a" aria-hidden="true"></div>
+  <div class="aurora aurora-b" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <button class="brand" data-route="discover" aria-label="返回发现页">
+      <span class="brand-symbol"><i></i><b>绊</b></span>
+      <span class="brand-copy"><strong>谷绊</strong><small>GUZI BOND</small></span>
+    </button>
+    <nav class="desktop-nav" aria-label="主导航">
+      <button class="nav-item active" data-route="discover"><span>发现</span></button>
+      <button class="nav-item" data-route="create"><span>生成谷子</span></button>
+      <button class="nav-item" data-route="vault"><span>我的谷仓</span></button>
+      <button class="nav-item" data-route="museum"><span>本命展厅</span></button>
+      <button class="nav-item" data-route="inherit"><span>羁绊传承</span></button>
+    </nav>
+    <div class="top-actions">
+      <button class="icon-button" id="themeToggle" aria-label="切换明暗模式" title="切换明暗模式">
+        <span>◐</span>
+      </button>
+      <button class="profile-pill" data-route="profile">
+        <span class="profile-avatar">嘉</span>
+        <span><strong>谷主嘉嘉</strong><small id="profileCount">3 件藏品</small></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="screen active" id="discover" data-screen>
+      <div class="hero-grid">
+        <div class="hero-copy reveal">
+          <div class="status-chip"><span class="pulse"></span>让每一件谷子拥有自己的数字生命</div>
+          <h1>喜欢有迹可循，<br><em>羁绊值得被看见。</em></h1>
+          <p>扫描实体谷子，自动生成会呼吸、会发光、可分享的电子谷子；记录你与本命相遇、陪伴和传承的每一个瞬间。</p>
+          <div class="hero-buttons">
+            <button class="button primary xl" data-route="create">扫描我的谷子 <span>↗</span></button>
+            <button class="button ghost xl" data-route="museum">逛逛本命展厅</button>
+          </div>
+          <div class="hero-metrics">
+            <div><strong id="heroArchiveCount">3</strong><span>我的馆藏</span></div>
+            <div><strong id="heroBondDays">1,248</strong><span>累计陪伴天数</span></div>
+            <div><strong id="heroStoryCount">3</strong><span>被保存的故事</span></div>
+          </div>
+        </div>
+
+        <div class="hero-stage reveal delay-1" id="heroStage">
+          <div class="stage-ring ring-one"></div>
+          <div class="stage-ring ring-two"></div>
+          <div class="float-chip chip-one">羁绊值 <b>96</b></div>
+          <div class="float-chip chip-two">陪伴 <b>427 天</b></div>
+          <div class="float-chip chip-three">本命挚爱</div>
+          <article class="bond-card hero-card theme-nebula" data-tilt>
+            <div class="holo"></div>
+            <div class="card-head"><span>GUZI BOND · 000827</span><span>✦</span></div>
+            <div class="card-visual sample-art art-march">
+              <span class="art-orb orb-1"></span><span class="art-orb orb-2"></span>
+              <div class="character-mark"><span>三</span><small>MARCH</small></div>
+            </div>
+            <div class="card-content">
+              <div class="rarity-line"><span>SSR</span><b>本命挚爱</b></div>
+              <h3>星光纪念限定吧唧</h3>
+              <p>“喜欢不是短暂的热闹，而是长久的认真。”</p>
+            </div>
+            <div class="card-foot"><span>谷主 · 嘉嘉</span><span>相遇于 2025.05.21</span></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="ticker" aria-label="热门标签">
+        <div class="ticker-track">
+          <span>#谷子数字化</span><i>✦</i><span>#一谷一档</span><i>✦</i><span>#本命图鉴</span><i>✦</i><span>#羁绊传承</span><i>✦</i><span>#校园谷圈</span><i>✦</i><span>#绝版保全</span><i>✦</i>
+          <span>#谷子数字化</span><i>✦</i><span>#一谷一档</span><i>✦</i><span>#本命图鉴</span><i>✦</i><span>#羁绊传承</span><i>✦</i><span>#校园谷圈</span><i>✦</i><span>#绝版保全</span><i>✦</i>
+        </div>
+      </div>
+
+      <section class="content-section">
+        <div class="section-heading reveal">
+          <div><span class="kicker">WHY GUZI BOND</span><h2>不是库存表，是你的二次元人生档案</h2></div>
+          <p>物品信息负责证明“它是谁”，羁绊记忆负责回答“它为什么重要”。</p>
+        </div>
+        <div class="value-grid">
+          <article class="value-card reveal"><span class="value-index">01</span><div class="value-icon">⌁</div><h3>AI 扫描建档</h3><p>拍摄或上传实物图，快速整理角色、IP、品类与品相，生成唯一身份编号。</p><small>从实物到数字档案</small></article>
+          <article class="value-card reveal delay-1"><span class="value-index">02</span><div class="value-icon">✦</div><h3>动态电子谷子</h3><p>自动生成漂浮、全息扫光、3D 倾斜效果，让收藏真正“活”起来。</p><small>可分享、可展示、可纪念</small></article>
+          <article class="value-card reveal delay-2"><span class="value-index">03</span><div class="value-icon">∞</div><h3>羁绊持续生长</h3><p>收藏天数、故事完整度、养护与互动共同提升羁绊等级。</p><small>让长期陪伴被量化</small></article>
+          <article class="value-card reveal delay-3"><span class="value-index">04</span><div class="value-icon">⇄</div><h3>温柔流转</h3><p>寄语、养护经验与历任故事跟随谷子传承，转手不再意味着记忆清零。</p><small>建立有温度的二手秩序</small></article>
+        </div>
+      </section>
+
+      <section class="content-section compact-section">
+        <div class="section-heading reveal">
+          <div><span class="kicker">TRENDING NOW</span><h2>今天，大家在收藏什么</h2></div>
+          <button class="text-link" data-route="community">进入校园谷圈 <span>→</span></button>
+        </div>
+        <div class="trend-grid" id="trendGrid"></div>
+      </section>
+
+      <section class="launch-banner reveal">
+        <div>
+          <span class="kicker">LIMITED BETA</span>
+          <h2>建立你的第一份本命档案</h2>
+          <p>首批谷主可解锁“开馆纪念”动态卡面与专属编号。</p>
+        </div>
+        <button class="button light xl" data-route="create">立即生成 <span>↗</span></button>
+      </section>
+    </section>
+
+    <section class="screen" id="create" data-screen>
+      <div class="screen-title">
+        <div><span class="kicker">DIGITAL GUZI LAB</span><h1>生成你的动态电子谷子</h1><p>上传实拍图，建立物资档案与羁绊档案，约 1 分钟完成。</p></div>
+        <div class="step-status"><b id="stepNumber">01</b><span>共 3 步</span></div>
+      </div>
+
+      <div class="creator-shell">
+        <div class="creator-main panel">
+          <div class="stepper">
+            <button class="step active" data-step="1"><span>1</span><b>扫描实物</b><small>上传或拍摄</small></button>
+            <i></i>
+            <button class="step" data-step="2"><span>2</span><b>建立档案</b><small>物资 + 故事</small></button>
+            <i></i>
+            <button class="step" data-step="3"><span>3</span><b>生成藏品</b><small>主题与分享</small></button>
+          </div>
+
+          <form id="creatorForm">
+            <div class="step-pane active" data-step-pane="1">
+              <div class="upload-grid">
+                <label class="upload-zone" id="uploadZone">
+                  <input type="file" id="imageInput" accept="image/*" hidden>
+                  <div class="scan-corners"><i></i><i></i><i></i><i></i></div>
+                  <img id="uploadPreview" alt="谷子图片预览">
+                  <div class="upload-placeholder" id="uploadPlaceholder">
+                    <div class="camera-mark">⌗</div>
+                    <h3>上传一张谷子正面照</h3>
+                    <p>建议使用干净背景，保持光线均匀</p>
+                    <span>JPG / PNG / WEBP · 最大 8 MB</span>
+                  </div>
+                  <div class="scan-line"></div>
+                </label>
+                <div class="scan-side">
+                  <div class="scan-tip"><span>01</span><div><b>保持正面</b><small>尽量避免倾斜和反光</small></div></div>
+                  <div class="scan-tip"><span>02</span><div><b>背景简洁</b><small>纯色桌面识别效果更好</small></div></div>
+                  <div class="scan-tip"><span>03</span><div><b>完整入镜</b><small>不要裁切谷子边缘</small></div></div>
+                  <button type="button" class="button soft full" id="demoScan">没有图片？体验智能扫描</button>
+                </div>
+              </div>
+              <div class="pane-actions"><span></span><button type="button" class="button primary" data-next-step="2">下一步：建立档案 <span>→</span></button></div>
+            </div>
+
+            <div class="step-pane" data-step-pane="2">
+              <div class="form-section">
+                <div class="form-section-head"><span>物资档案</span><small>记录谷子的基础信息</small></div>
+                <div class="form-grid">
+                  <label class="field span-2"><span>谷子名称 *</span><input id="itemName" required maxlength="36" placeholder="例如：星光纪念限定吧唧"></label>
+                  <label class="field"><span>所属作品 / IP *</span><input id="itemIP" required maxlength="30" placeholder="例如：崩坏：星穹铁道"></label>
+                  <label class="field"><span>本命角色</span><input id="character" maxlength="24" placeholder="例如：三月七"></label>
+                  <label class="field"><span>谷子类型</span><select id="itemType"><option>徽章 / 吧唧</option><option>亚克力立牌</option><option>色纸 / 明信片</option><option>挂件 / 钥匙扣</option><option>毛绒 / 玩偶</option><option>票根 / 特典</option><option>其他周边</option></select></label>
+                  <label class="field"><span>当前品相</span><select id="condition"><option>全新未拆</option><option selected>近全新</option><option>轻微使用痕迹</option><option>陪伴感明显</option></select></label>
+                  <label class="field"><span>购入日期</span><input type="date" id="buyDate"></label>
+                  <label class="field"><span>购入价格</span><div class="prefix-input"><span>¥</span><input type="number" id="price" min="0" step="0.01" placeholder="59.00"></div></label>
+                </div>
+              </div>
+              <div class="form-section story-section">
+                <div class="form-section-head"><span>羁绊档案</span><small>这里决定它为什么独一无二</small></div>
+                <label class="field"><span>你与它的故事 *</span><textarea id="story" required maxlength="260" placeholder="第一次见到它是什么时候？为什么决定把它带回家？它陪你经历了什么？"></textarea><small class="counter"><b id="storyCounter">0</b>/260</small></label>
+                <div class="form-grid">
+                  <label class="field"><span>本命感言</span><input id="quote" maxlength="64" placeholder="喜欢不是短暂的热闹，而是长久的认真。"></label>
+                  <label class="field"><span>收藏标签</span><input id="tags" maxlength="50" placeholder="首发入手, 漫展回忆, 本命"></label>
+                </div>
+              </div>
+              <div class="pane-actions"><button type="button" class="button ghost" data-prev-step="1">← 上一步</button><button type="button" class="button primary" data-next-step="3">下一步：生成藏品 <span>→</span></button></div>
+            </div>
+
+            <div class="step-pane" data-step-pane="3">
+              <div class="theme-picker">
+                <div class="form-section-head"><span>选择动态卡面</span><small>以后仍可在谷仓中更换</small></div>
+                <div class="theme-options">
+                  <button type="button" class="theme-option active" data-theme="nebula"><i class="theme-preview nebula"></i><b>星云紫</b><small>梦幻 / 本命感</small></button>
+                  <button type="button" class="theme-option" data-theme="sakura"><i class="theme-preview sakura"></i><b>樱花粉</b><small>柔和 / 少女感</small></button>
+                  <button type="button" class="theme-option" data-theme="aqua"><i class="theme-preview aqua"></i><b>海盐蓝</b><small>清透 / 未来感</small></button>
+                  <button type="button" class="theme-option" data-theme="ember"><i class="theme-preview ember"></i><b>赤焰金</b><small>热烈 / 限定感</small></button>
+                </div>
+              </div>
+              <div class="generation-summary">
+                <div><span>预计羁绊等级</span><strong id="estimatedLevel">初心收藏</strong></div>
+                <div><span>专属身份编号</span><strong id="estimatedCode">GB-NEW</strong></div>
+                <div><span>动态效果</span><strong>漂浮 · 扫光 · 3D</strong></div>
+              </div>
+              <div class="pane-actions"><button type="button" class="button ghost" data-prev-step="2">← 上一步</button><button type="submit" class="button primary xl">生成并存入谷仓 <span>✦</span></button></div>
+            </div>
+          </form>
+        </div>
+
+        <aside class="live-preview panel">
+          <div class="preview-top"><div><span>LIVE PREVIEW</span><small>移动鼠标查看 3D 光泽</small></div><span class="live-dot">LIVE</span></div>
+          <div class="preview-stage" id="previewStage">
+            <article class="bond-card preview-card theme-nebula" id="previewCard" data-tilt>
+              <div class="holo"></div>
+              <div class="card-head"><span id="previewCode">GUZI BOND · NEW</span><span>✦</span></div>
+              <div class="card-visual" id="previewVisual"><div class="empty-art"><span>谷</span><small>等待扫描</small></div></div>
+              <div class="card-content"><div class="rarity-line"><span id="previewRarity">R</span><b id="previewLevel">初心收藏</b></div><h3 id="previewName">你的专属电子谷子</h3><p id="previewQuote">“每一份喜欢，都值得被认真记录。”</p></div>
+              <div class="card-foot"><span>谷主 · 嘉嘉</span><span id="previewDate">等待相遇</span></div>
+            </article>
+          </div>
+          <div class="preview-features"><span>✦ 动态漂浮</span><span>◈ 全息扫光</span><span>⌁ 唯一编号</span><span>↗ 一键分享</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="vault" data-screen>
+      <div class="screen-title vault-heading">
+        <div><span class="kicker">MY GUZI VAULT</span><h1>我的谷仓</h1><p>所有收藏、故事与陪伴，都在这里持续生长。</p></div>
+        <button class="button primary" data-route="create">+ 新增谷子</button>
+      </div>
+      <div class="stats-row">
+        <article><span>馆藏总数</span><strong id="statTotal">0</strong><small>件电子谷子</small></article>
+        <article><span>累计收藏价值</span><strong id="statValue">¥0</strong><small>按录入价格计算</small></article>
+        <article><span>累计陪伴</span><strong id="statDays">0</strong><small>天共同记忆</small></article>
+        <article><span>最高羁绊</span><strong id="statLevel">待点亮</strong><small>继续记录可升级</small></article>
+      </div>
+      <div class="vault-toolbar panel">
+        <div class="search-field"><span>⌕</span><input id="vaultSearch" placeholder="搜索名称、IP、角色或故事"></div>
+        <select id="vaultType"><option value="all">全部品类</option><option>徽章 / 吧唧</option><option>亚克力立牌</option><option>色纸 / 明信片</option><option>挂件 / 钥匙扣</option><option>毛绒 / 玩偶</option><option>票根 / 特典</option><option>其他周边</option></select>
+        <select id="vaultSort"><option value="new">最新入库</option><option value="bond">羁绊最高</option><option value="days">陪伴最久</option><option value="price">价格最高</option></select>
+        <div class="view-switch"><button class="active" data-view="grid">▦</button><button data-view="list">☷</button></div>
+      </div>
+      <div class="vault-grid" id="vaultGrid"></div>
+      <div class="empty-panel panel" id="vaultEmpty"><div class="empty-glyph">✦</div><h3>你的谷仓还没有藏品</h3><p>扫描第一件谷子，让它拥有自己的数字生命。</p><button class="button primary" data-route="create">生成第一件电子谷子</button></div>
+    </section>
+
+    <section class="screen museum-screen" id="museum" data-screen>
+      <div class="museum-hero">
+        <div><span class="kicker light">OSHI COLLECTION HALL</span><h1>嘉嘉的本命展厅</h1><p>这里收藏的不只是周边，也是我与本命共同走过的时间。</p></div>
+        <div class="museum-actions"><button class="button glass-light" id="shareMuseum">分享展厅</button><button class="button light" data-route="create">+ 添加展品</button></div>
+      </div>
+      <div class="museum-meta"><span><b id="museumTotal">0</b> 件馆藏</span><i></i><span><b id="museumIPCount">0</b> 个作品</span><i></i><span>开馆于 2026.07</span></div>
+      <div class="museum-wall" id="museumWall"></div>
+      <div class="museum-empty" id="museumEmpty"><span>▦</span><h3>展厅正在等待第一件藏品</h3><p>从“生成电子谷子”开始建立你的本命图鉴。</p></div>
+    </section>
+
+    <section class="screen" id="inherit" data-screen>
+      <div class="screen-title">
+        <div><span class="kicker">BOND INHERITANCE</span><h1>谷子流转 · 羁绊传承</h1><p>实物可以换主人，但被认真珍惜过的记忆不该消失。</p></div>
+        <span class="warm-chip">让每一次转手更有温度</span>
+      </div>
+      <div class="inherit-shell">
+        <form class="inherit-form panel" id="inheritForm">
+          <div class="form-section-head numbered"><b>01</b><div><span>选择即将流转的谷子</span><small>系统将生成可交付给下一任谷主的传承卡</small></div></div>
+          <label class="field"><span>选择藏品</span><select id="inheritItem"><option value="">请选择谷仓中的藏品</option></select></label>
+          <div class="form-section-head numbered"><b>02</b><div><span>写下你的传承寄语</span><small>分享收藏心得、养护经验和对下一任谷主的祝福</small></div></div>
+          <label class="field"><span>给下一任谷主的话 *</span><textarea id="inheritMessage" required maxlength="180" placeholder="谢谢你愿意继续珍惜它。希望它也能陪你走过一段闪闪发光的日子……"></textarea></label>
+          <label class="field"><span>养护手记</span><input id="careTip" maxlength="90" placeholder="例如：避免阳光直射，建议使用 58mm 保护套。"></label>
+          <label class="check-line"><input type="checkbox" id="anonymous"><span>在公开传承卡上匿名显示前任谷主</span></label>
+          <button class="button primary full xl" type="submit">生成羁绊传承卡 <span>→</span></button>
+        </form>
+        <aside class="pass-preview panel">
+          <div class="pass-card" id="passCard">
+            <div class="pass-ribbon">BOND PASS</div>
+            <div class="pass-code" id="passCode">NO. ———</div>
+            <div class="pass-image" id="passImage"><span>♡</span></div>
+            <span class="pass-label">羁绊传承证明</span>
+            <h2 id="passName">请选择一件谷子</h2>
+            <blockquote id="passMessage">“被认真珍惜过的物品，会带着温度继续旅行。”</blockquote>
+            <div class="pass-info"><span>前任谷主<b id="passOwner">嘉嘉</b></span><span>传承时间<b id="passDate">—</b></span></div>
+            <div class="care-note"><span>养护手记</span><p id="passCare">等待填写</p></div>
+            <div class="identity-code" id="identityCode" aria-label="身份码"></div>
+            <small>身份码关联完整物资档案、羁绊故事与历任传承记录</small>
+          </div>
+          <button class="button ghost full" id="downloadPass" type="button">下载传承卡</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="community" data-screen>
+      <div class="screen-title">
+        <div><span class="kicker">CAMPUS GUZI CIRCLE</span><h1>校园谷圈</h1><p>发现同校同好、晒出本命收藏，让每一份热爱都被回应。</p></div>
+        <button class="button primary" id="publishMock">发布我的谷子</button>
+      </div>
+      <div class="community-layout">
+        <div class="community-feed" id="communityFeed"></div>
+        <aside class="community-side">
+          <div class="panel side-card"><span class="kicker">HOT TOPICS</span><h3>本周热门话题</h3><div class="topic-list"><button>#漫展战利品 <b>2.8k</b></button><button>#我的镇柜之宝 <b>1.9k</b></button><button>#绝版谷寻亲 <b>1.2k</b></button><button>#本命生日阵 <b>986</b></button></div></div>
+          <div class="panel side-card"><span class="kicker">CAMPUS RANK</span><h3>校园收藏力榜</h3><ol class="rank-list"><li><i>1</i><span class="mini-avatar a1">星</span><div><b>星野眠</b><small>羁绊值 9,842</small></div></li><li><i>2</i><span class="mini-avatar a2">柚</span><div><b>柚子茶</b><small>羁绊值 8,716</small></div></li><li><i>3</i><span class="mini-avatar a3">鹿</span><div><b>鹿岛同学</b><small>羁绊值 7,990</small></div></li></ol></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="profile" data-screen>
+      <div class="profile-cover">
+        <div class="profile-large-avatar">嘉</div>
+        <div><span class="kicker light">GUZI OWNER PROFILE</span><h1>谷主嘉嘉</h1><p>“把喜欢变成一件可以被时间证明的事。”</p></div>
+        <button class="button glass-light" id="editProfile">编辑主页</button>
+      </div>
+      <div class="profile-body">
+        <div class="profile-stat-card"><span><b id="profileStatItems">0</b>馆藏</span><span><b id="profileStatDays">0</b>陪伴天数</span><span><b id="profileStatIPs">0</b>本命作品</span><span><b>96</b>最高羁绊</span></div>
+        <div class="profile-grid">
+          <section class="panel profile-section"><div class="mini-heading"><div><span class="kicker">BOND TIMELINE</span><h2>羁绊时间线</h2></div></div><div class="timeline" id="profileTimeline"></div></section>
+          <aside class="panel profile-section"><div class="mini-heading"><div><span class="kicker">BADGES</span><h2>谷主勋章</h2></div></div><div class="badge-grid"><div><span>✦</span><b>开馆谷主</b><small>完成首件建档</small></div><div><span>∞</span><b>长情收藏家</b><small>累计陪伴 365 天</small></div><div class="locked"><span>◇</span><b>传承见证者</b><small>完成 3 次温柔流转</small></div><div class="locked"><span>♕</span><b>绝版守护者</b><small>收录 5 件绝版谷</small></div></div></aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="mobile-nav" aria-label="移动端导航">
+    <button class="active" data-route="discover"><span>⌂</span><small>发现</small></button>
+    <button data-route="vault"><span>▦</span><small>谷仓</small></button>
+    <button class="mobile-create" data-route="create"><span>＋</span></button>
+    <button data-route="museum"><span>◇</span><small>展厅</small></button>
+    <button data-route="profile"><span>○</span><small>我的</small></button>
+  </nav>
+
+  <div class="modal" id="detailModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel">
+      <button class="modal-close" data-close-modal>×</button>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="shareModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-share></div>
+    <div class="share-panel">
+      <button class="modal-close" data-close-share>×</button>
+      <div class="share-copy"><span class="kicker">SHARE YOUR BOND</span><h2>分享你的羁绊</h2><p>生成适合朋友圈、小红书和社群传播的纪念海报。</p></div>
+      <canvas id="shareCanvas" width="900" height="1200"></canvas>
+      <div class="share-actions"><button class="button ghost" id="copyShareText">复制分享文案</button><button class="button primary" id="downloadPoster">下载纪念海报</button></div>
+    </div>
+  </div>
+
+  <div class="success-modal" id="successModal" aria-hidden="true">
+    <div class="success-burst"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="success-card">
+      <span class="success-icon">✦</span>
+      <small>GENERATION COMPLETE</small>
+      <h2>你的电子谷子已诞生</h2>
+      <p>它已经拥有唯一编号、动态卡面和专属羁绊档案。</p>
+      <div class="success-actions"><button class="button ghost" id="successShare">生成分享海报</button><button class="button primary" id="successVault">查看我的谷仓</button></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><span>✓</span><p>操作成功</p></div>
+
+  <footer class="footer">
+    <div class="brand footer-brand"><span class="brand-symbol"><i></i><b>绊</b></span><span class="brand-copy"><strong>谷绊</strong><small>GUZI BOND</small></span></div>
+    <p>让每一份喜欢，都拥有可被时间证明的档案。</p>
+    <span>© 2026 GUZI BOND · 比赛正式演示版</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
