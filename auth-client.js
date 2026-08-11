@@ -52,10 +52,18 @@ function switchMode(nextMode) {
 function normalizeUser(loginState) {
   const raw = loginState?.user || loginState?.data?.user || auth?.currentUser || null;
   if (!raw) return null;
+  const loginType = String(
+    raw.loginType || raw.userInfo?.loginType || raw.app_metadata?.provider || loginState?.loginType || ''
+  ).toLowerCase();
+  const email = raw.email || raw.mail || raw.userInfo?.email || '';
+  // Publishable Key 会提供匿名访问身份，它不是用户登录会话。
+  if (/anonymous|anon/.test(loginType) || (!email && /^anonymous$/i.test(String(raw.name || raw.username || '')))) {
+    return null;
+  }
   return {
     ...raw,
     uid: raw.uid || raw.id || raw.userInfo?.uid || raw.userInfo?.id || '',
-    email: raw.email || raw.mail || raw.userInfo?.email || '',
+    email,
     username: raw.username || raw.name || raw.nickName || ''
   };
 }
@@ -251,6 +259,7 @@ if (window.isGuziBondCloudbaseConfigured()) {
     demoNote.textContent = '已连接谷绊云端；登录后档案与图片将同步到专属云仓。';
     const initialState = await auth.getLoginState();
     await applyLoginState(initialState);
+    if (!currentUser) window.guziBondUI?.restoreGuestDemo();
     auth.onLoginStateChanged(async () => {
       const state = await auth.getLoginState();
       if (state && !currentUser) await applyLoginState(state);

@@ -1,4 +1,4 @@
-const CACHE = 'guzi-bond-v6-auth-bootstrap-fix';
+const CACHE = 'guzi-bond-v7-ignore-publishable-anonymous';
 const ASSETS = ['./','./index.html','./styles.css','./app.js','./auth-client.js','./cloudbase-config.js','./vendor/cloudbase.full.js','./manifest.webmanifest'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS))));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))));
