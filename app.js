@@ -126,6 +126,22 @@ function toast(message) {
   toast.timer = setTimeout(() => box.classList.remove('show'), 2400);
 }
 
+window.guziBondUI = {
+  toast,
+  setAuthUser(user) {
+    const email = user?.email || user?.mail || '';
+    const nickname = user?.nickName || user?.username || (email ? email.split('@')[0] : '谷主');
+    const avatar = String(nickname || '谷').trim().slice(0, 1).toUpperCase();
+    $('#authEntry').classList.toggle('is-hidden', Boolean(user));
+    $('#profilePill').classList.toggle('is-hidden', !user);
+    $('#headerAvatar').textContent = avatar;
+    $('#profileAvatar').textContent = avatar;
+    $('#headerOwnerName').textContent = `谷主${nickname}`;
+    $('#profileOwnerName').textContent = `谷主${nickname}`;
+    $('#profileOwnerEmail').textContent = email || '已登录专属谷仓';
+  }
+};
+
 function routeTo(id, pushHash = true) {
   const target = document.getElementById(id) ? id : 'discover';
   $$('[data-screen]').forEach(screen => screen.classList.toggle('active', screen.id === target));
@@ -519,8 +535,6 @@ $('#themeToggle').addEventListener('click', () => {
 if (localStorage.getItem(THEME_KEY) === 'light') document.body.classList.add('light');
 
 $('#publishMock').addEventListener('click', () => toast('正式上线后可在此发布谷子动态'));
-$('#editProfile').addEventListener('click', () => toast('个人主页编辑功能已预留'));
-
 window.addEventListener('keydown', event => { if (event.key === 'Escape') { closeDetail(); closeShare(); $('#successModal').classList.remove('open'); } });
 
 renderTrends(); renderCommunity(); renderAll(); setupTilt(); updatePreview();

@@ -30,9 +30,10 @@
       <button class="icon-button" id="themeToggle" aria-label="切换明暗模式" title="切换明暗模式">
         <span>◐</span>
       </button>
-      <button class="profile-pill" data-route="profile">
-        <span class="profile-avatar">嘉</span>
-        <span><strong>谷主嘉嘉</strong><small id="profileCount">3 件藏品</small></span>
+      <button class="button auth-entry" id="authEntry" type="button">注册 / 登录</button>
+      <button class="profile-pill is-hidden" id="profilePill" data-route="profile">
+        <span class="profile-avatar" id="headerAvatar">谷</span>
+        <span><strong id="headerOwnerName">我的谷仓</strong><small id="profileCount">3 件藏品</small></span>
       </button>
     </div>
   </header>
@@ -297,9 +298,9 @@
 
     <section class="screen" id="profile" data-screen>
       <div class="profile-cover">
-        <div class="profile-large-avatar">嘉</div>
-        <div><span class="kicker light">GUZI OWNER PROFILE</span><h1>谷主嘉嘉</h1><p>“把喜欢变成一件可以被时间证明的事。”</p></div>
-        <button class="button glass-light" id="editProfile">编辑主页</button>
+        <div class="profile-large-avatar" id="profileAvatar">谷</div>
+        <div><span class="kicker light">GUZI OWNER PROFILE</span><h1 id="profileOwnerName">游客谷仓</h1><p id="profileOwnerEmail">登录后即可跨设备保存你的羁绊档案</p></div>
+        <button class="button glass-light" id="accountMenuButton">账号设置</button>
       </div>
       <div class="profile-body">
         <div class="profile-stat-card"><span><b id="profileStatItems">0</b>馆藏</span><span><b id="profileStatDays">0</b>陪伴天数</span><span><b id="profileStatIPs">0</b>本命作品</span><span><b>96</b>最高羁绊</span></div>
@@ -348,6 +349,36 @@
     </div>
   </div>
 
+  <div class="modal auth-modal" id="authModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-auth></div>
+    <div class="auth-panel" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="modal-close" type="button" data-close-auth aria-label="关闭">×</button>
+      <div class="auth-brand"><span class="brand-symbol"><i></i><b>绊</b></span></div>
+      <span class="kicker">WELCOME TO GUZI BOND</span>
+      <h2 id="authTitle">登录你的专属谷仓</h2>
+      <p class="auth-lead">换手机、清缓存也不怕，登录后即可找回属于你的谷子与故事。</p>
+      <div class="auth-tabs" role="tablist">
+        <button class="active" type="button" data-auth-tab="login">登录</button>
+        <button type="button" data-auth-tab="register">注册</button>
+      </div>
+      <form id="authForm" novalidate>
+        <label class="field"><span>邮箱</span><input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com" required></label>
+        <label class="field"><span>密码</span><input id="authPassword" type="password" autocomplete="current-password" placeholder="至少 8 位，包含字母和数字" minlength="8" required></label>
+        <label class="field auth-confirm is-hidden" id="confirmField"><span>确认密码</span><input id="authConfirm" type="password" autocomplete="new-password" placeholder="再次输入密码"></label>
+        <p class="auth-message" id="authMessage" role="status"></p>
+        <button class="button primary auth-submit" id="authSubmit" type="submit">登录</button>
+      </form>
+      <button class="auth-forgot" id="forgotPassword" type="button">忘记密码？发送重置邮件</button>
+      <div class="auth-demo-note" id="authDemoNote">云端尚未配置时，网站会继续使用本地演示数据。</div>
+    </div>
+  </div>
+
+  <div class="account-popover is-hidden" id="accountPopover" role="dialog" aria-label="账号菜单">
+    <strong id="accountEmail">已登录</strong>
+    <small>你的云端会话已在此设备保持</small>
+    <button type="button" id="signOutButton">退出登录</button>
+  </div>
+
   <div class="toast" id="toast"><span>✓</span><p>操作成功</p></div>
 
   <footer class="footer">
@@ -357,5 +388,7 @@
   </footer>
 
   <script src="app.js"></script>
+  <script src="vendor/cloudbase.full.js"></script>
+  <script type="module" src="auth-client.js"></script>
 </body>
 </html>
