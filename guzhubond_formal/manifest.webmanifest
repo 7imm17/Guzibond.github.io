@@ -1,0 +1,9 @@
+{
+  "name": "谷绊 GUZI BOND",
+  "short_name": "谷绊",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d0b16",
+  "theme_color": "#7c5cff",
+  "description": "谷主羁绊档案系统"
+}
