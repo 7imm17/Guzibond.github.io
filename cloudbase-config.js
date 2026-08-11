@@ -1,10 +1,12 @@
-// 在腾讯云 CloudBase 控制台创建环境后，只需修改 env。
-// envId 属于前端公开配置，不要在这里填写 SecretId、SecretKey 或任何管理员密钥。
-export const cloudbaseConfig = {
-  env: '请替换为你的-CloudBase-环境ID',
-  region: 'ap-shanghai'
+// envId 与 Publishable Key 属于前端公开配置；不要填写服务端 API Key、SecretId 或 SecretKey。
+window.guziBondCloudbaseConfig = {
+  env: 'guzibond-d0g911rredd57c82d',
+  region: 'ap-shanghai',
+  accessKey: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjlkMWRjMzFlLWI0ZDAtNDQ4Yi1hNzZmLWIwY2M2M2Q4MTQ5OCJ9.eyJpc3MiOiJodHRwczovL2d1emlib25kLWQwZzkxMXJyZWRkNTdjODJkLmFwLXNoYW5naGFpLnRjYi1hcGkudGVuY2VudGNsb3VkYXBpLmNvbSIsInN1YiI6ImFub24iLCJhdWQiOiJndXppYm9uZC1kMGc5MTFycmVkZDU3YzgyZCIsImV4cCI6NDA5MDE1NzQwMSwiaWF0IjoxNzg2NDc0MjAxLCJub25jZSI6Ik1wZms5bEsxVGx1eXFZenlKa3JVZ3ciLCJhdF9oYXNoIjoiTXBmazlsSzFUbHV5cVl6eUprclVndyIsIm5hbWUiOiJBbm9ueW1vdXMiLCJzY29wZSI6ImFub255bW91cyIsInByb2plY3RfaWQiOiJndXppYm9uZC1kMGc5MTFycmVkZDU3YzgyZCIsIm1ldGEiOnsicGxhdGZvcm0iOiJQdWJsaXNoYWJsZUtleSJ9LCJ1c2VyX3R5cGUiOiIiLCJjbGllbnRfdHlwZSI6ImNsaWVudF91c2VyIiwiaXNfc3lzdGVtX2FkbWluIjpmYWxzZX0.Q0R8QD_bZy5dGczlOC5WUh4ZL9sfD7KT7pc3ILlJ2Xa6UZ8IqY15x0565J6Pl8eJ3BaOPO-2K6McM9GNDgxJIamP1YaRKad46TEXbfQR1Nc3814VnP0KXwwhSNtENtJ0bg5xixNNg8QONsF9BpexFfRP-tlKXuvpDV9gT0ya2_WLEHNxUqksu2QGHJDdiihKEr7BR28nMyZ1eRkdbpuUPDEyVeoe7Nim3DwGph8aWQZtkMJ8tzeRSFyrfFSSLULhbe2U6bc-C3zkr7bIgIVRcb46-rqTouyGrEvA0dEdveJHJqS1mM_HZg_Ix5cZdhoQeEuYucmjheaiHLUE3kjVyg'
 };
 
-export const isCloudbaseConfigured = () => (
-  Boolean(cloudbaseConfig.env) && !cloudbaseConfig.env.includes('请替换')
+window.isGuziBondCloudbaseConfigured = () => (
+  Boolean(window.guziBondCloudbaseConfig.env) &&
+  Boolean(window.guziBondCloudbaseConfig.accessKey) &&
+  !window.guziBondCloudbaseConfig.env.includes('请替换')
 );

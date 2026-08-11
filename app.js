@@ -3,6 +3,8 @@
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const STORAGE_KEY = 'guziBondFormalV2';
+const CLOUD_CACHE_PREFIX = 'guziBondCloudCache:';
+const DEMO_IDS = new Set(['172105210001', '171399520002', '170714880003']);
 const THEME_KEY = 'guziBondThemeV2';
 const LEVELS = ['初心收藏', '长久陪伴', '本命挚爱', '绝版羁绊', '传世羁绊'];
 const rotations = ['-2.4deg', '1.6deg', '-1.1deg', '2.2deg', '-1.8deg', '1deg'];
@@ -10,6 +12,7 @@ let selectedTheme = 'nebula';
 let currentImage = '';
 let latestCreatedId = '';
 let vaultView = 'grid';
+let activeStorageKey = STORAGE_KEY;
 
 function safeParse(value, fallback) {
   try { return JSON.parse(value) ?? fallback; } catch { return fallback; }
@@ -53,9 +56,15 @@ const demoArchive = [
   }
 ];
 
+const hadStoredArchive = localStorage.getItem(STORAGE_KEY) !== null;
 let archive = safeParse(localStorage.getItem(STORAGE_KEY), null);
 if (!Array.isArray(archive)) archive = demoArchive;
 if (!localStorage.getItem(STORAGE_KEY)) localStorage.setItem(STORAGE_KEY, JSON.stringify(archive));
+
+function migratableLocalArchive() {
+  if (!hadStoredArchive) return [];
+  return archive.filter(item => !DEMO_IDS.has(String(item.id)) && !item.isDemo);
+}
 
 const communityPosts = [
   {user:'星野眠', avatar:'星', cls:'a1', time:'今天 18:42', text:'终于把这一套巡演吧唧收齐了！最后一枚是同校谷友帮我蹲到的，完整图鉴真的太治愈了。', mark:'巡', sub:'TOUR SET', colors:['#c8b6ff','#ffb9da','#fff'], likes:328, comments:41},
@@ -70,7 +79,7 @@ const trendData = [
 ];
 
 function saveArchive() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(archive)); }
+  try { localStorage.setItem(activeStorageKey, JSON.stringify(archive)); }
   catch { toast('图片数据较大，浏览器本地空间不足'); }
   renderAll();
 }
@@ -139,6 +148,27 @@ window.guziBondUI = {
     $('#headerOwnerName').textContent = `谷主${nickname}`;
     $('#profileOwnerName').textContent = `谷主${nickname}`;
     $('#profileOwnerEmail').textContent = email || '已登录专属谷仓';
+    window.guziBondOwnerLabel = user ? nickname : '嘉嘉';
+  },
+  getArchive: () => archive,
+  getMigratableLocalArchive: migratableLocalArchive,
+  setUserContext(uid) {
+    activeStorageKey = uid ? `${CLOUD_CACHE_PREFIX}${uid}` : STORAGE_KEY;
+  },
+  getUserCache(uid) {
+    return safeParse(localStorage.getItem(`${CLOUD_CACHE_PREFIX}${uid}`), []);
+  },
+  restoreGuestDemo() {
+    activeStorageKey = STORAGE_KEY;
+    archive = demoArchive.map(item => ({ ...item }));
+    renderAll();
+  },
+  setArchive(items, { cache = true } = {}) {
+    archive = Array.isArray(items) ? items : [];
+    if (cache) {
+      try { localStorage.setItem(activeStorageKey, JSON.stringify(archive)); } catch {}
+    }
+    renderAll();
   }
 };
 
@@ -313,12 +343,21 @@ function updatePreview() {
   if (currentImage && !$('#previewVisual img')) $('#previewVisual').innerHTML = `<img src="${currentImage}" alt="谷子预览">`;
 }
 
-$('#creatorForm').addEventListener('submit', event => {
+$('#creatorForm').addEventListener('submit', async event => {
   event.preventDefault();
   const item = draftItem();
   if (!item.name || item.name === '你的专属电子谷子' || !item.ip || item.ip === '未分类作品' || !item.story) { toast('请完整填写谷子名称、所属作品和羁绊故事'); setStep(2); return; }
-  archive.unshift(item); latestCreatedId = item.id; saveArchive();
-  $('#successModal').classList.add('open'); $('#successModal').setAttribute('aria-hidden','false');
+  try {
+    if (window.guziBondCloud?.isSignedIn()) {
+      toast('正在保存到专属云仓…');
+      const saved = await window.guziBondCloud.saveItem(item);
+      archive.unshift(saved);
+    } else {
+      archive.unshift(item);
+    }
+    latestCreatedId = item.id; saveArchive();
+    $('#successModal').classList.add('open'); $('#successModal').setAttribute('aria-hidden','false');
+  } catch (error) { toast(error.message || '云端保存失败，请稍后重试'); }
 });
 
 function resetCreator() {
@@ -362,8 +401,13 @@ function renderVault() {
   if (archive.length > 0 && list.length === 0) grid.innerHTML = '<div class="empty-panel panel show" style="grid-column:1/-1"><div class="empty-glyph">⌕</div><h3>没有找到匹配的藏品</h3><p>换一个关键词或筛选条件试试。</p></div>';
   $$('[data-detail]', grid).forEach(button => button.addEventListener('click', () => openDetail(button.dataset.detail)));
   $$('[data-share]', grid).forEach(button => button.addEventListener('click', () => openShare(button.dataset.share)));
-  $$('[data-delete]', grid).forEach(button => button.addEventListener('click', () => {
-    if (confirm('确认删除这件藏品及其羁绊档案吗？')) { archive = archive.filter(item => item.id !== button.dataset.delete); saveArchive(); toast('藏品已从谷仓移除'); }
+  $$('[data-delete]', grid).forEach(button => button.addEventListener('click', async () => {
+    if (!confirm('确认删除这件藏品及其羁绊档案吗？')) return;
+    const item = archive.find(entry => entry.id === button.dataset.delete);
+    try {
+      if (window.guziBondCloud?.isSignedIn()) await window.guziBondCloud.deleteItem(item);
+      archive = archive.filter(entry => entry.id !== button.dataset.delete); saveArchive(); toast('藏品已从谷仓移除');
+    } catch (error) { toast(error.message || '删除失败，请稍后重试'); }
   }));
 }
 
@@ -419,7 +463,7 @@ function updatePassPreview() {
   $('#passName').textContent = item?.name || '请选择一件谷子';
   $('#passMessage').textContent = `“${message || '被认真珍惜过的物品，会带着温度继续旅行。'}”`;
   $('#passCare').textContent = care || '等待填写';
-  $('#passOwner').textContent = $('#anonymous').checked ? '一位前任谷主' : '嘉嘉';
+  $('#passOwner').textContent = $('#anonymous').checked ? '一位前任谷主' : (window.guziBondOwnerLabel || '嘉嘉');
   $('#passDate').textContent = item ? new Date().toLocaleDateString('zh-CN').replaceAll('/','.') : '—';
   $('#passImage').innerHTML = item?.image ? `<img src="${item.image}" alt="${escapeHtml(item.name)}">` : '<span>♡</span>';
   renderIdentityCode(item?.id || 'GUZIBOND');
@@ -427,14 +471,17 @@ function updatePassPreview() {
 ['inheritItem','inheritMessage','careTip'].forEach(id => $(`#${id}`).addEventListener(id === 'inheritItem' ? 'change' : 'input', updatePassPreview));
 $('#anonymous').addEventListener('change', updatePassPreview);
 
-$('#inheritForm').addEventListener('submit', event => {
+$('#inheritForm').addEventListener('submit', async event => {
   event.preventDefault();
   const item = archive.find(entry => entry.id === $('#inheritItem').value);
   const message = $('#inheritMessage').value.trim();
   if (!item || !message) { toast('请选择藏品并填写传承寄语'); return; }
   item.history = item.history || [];
   item.history.push({date:new Date().toISOString().slice(0,10), message, care:$('#careTip').value.trim()});
-  saveArchive(); updatePassPreview(); toast('羁绊传承卡已生成并写入档案');
+  try {
+    if (window.guziBondCloud?.isSignedIn()) await window.guziBondCloud.saveItem(item, { uploadImage: false });
+    saveArchive(); updatePassPreview(); toast('羁绊传承卡已生成并写入档案');
+  } catch (error) { item.history.pop(); updatePassPreview(); toast(error.message || '云端保存失败'); }
 });
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 4) {
@@ -472,7 +519,7 @@ async function drawSharePoster(item) {
   ctx.fillStyle='rgba(255,255,255,.14)';roundRect(ctx,82,838,130,42,21);ctx.fill();ctx.fillStyle='#fff';ctx.font='800 17px sans-serif';ctx.fillText(`${rarityFor(item)} · ${levelFor(item)}`,105,866);
   ctx.font='800 43px sans-serif';ctx.fillStyle='#fff';wrapText(ctx,item.name,82,939,730,53,2);
   ctx.font='400 20px serif';ctx.fillStyle='rgba(255,255,255,.76)';wrapText(ctx,`“${item.quote || item.story}”`,82,1024,730,31,3);
-  ctx.font='600 16px sans-serif';ctx.fillStyle='rgba(255,255,255,.64)';ctx.fillText(`谷主 · 嘉嘉     ${codeFor(item)}     陪伴 ${daysTogether(item)} 天`,82,1122);
+  ctx.font='600 16px sans-serif';ctx.fillStyle='rgba(255,255,255,.64)';ctx.fillText(`谷主 · ${window.guziBondOwnerLabel || '嘉嘉'}     ${codeFor(item)}     陪伴 ${daysTogether(item)} 天`,82,1122);
   ctx.textAlign='right';ctx.font='700 14px sans-serif';ctx.fillText('扫码进入我的本命展厅  ↗',818,1122);ctx.textAlign='left';
 }
 
