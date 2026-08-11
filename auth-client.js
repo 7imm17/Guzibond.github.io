@@ -1,3 +1,4 @@
+(async () => {
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 const modal = $('#authModal');
@@ -267,3 +268,8 @@ if (window.isGuziBondCloudbaseConfigured()) {
   demoNote.textContent = '当前为本地演示模式；填写 CloudBase 环境 ID 后即可启用真实账号。';
   window.guziBondUI?.setAuthUser(null);
 }
+})().catch(error => {
+  console.error('[GUZI BOND] CloudBase initialization failed:', error);
+  const note = document.querySelector('#authDemoNote');
+  if (note) note.textContent = '云端连接失败，请检查安全域名、认证方式和网络。';
+});
